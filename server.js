@@ -3,6 +3,7 @@ const user = require('./Classes/User');
 const post = require('./Classes/post');
 const Follow = require('./Classes/Follow');
 const company = require('./Classes/Company');
+const reply = require('./Classes/Reply');
 const Port = process.env.Port || 5500;
 
 
@@ -33,6 +34,12 @@ app.post('/addPostUser/:userId',(req,res)=>{
 });
 app.post('/addPostCompany/:companyId',(req,res)=>{
     res.send(post.addPostCompany(req.params.companyId,"wanna a scholarship"));
+});
+app.post('/replytoPostUser/:userId&:postId',(req,res)=>{
+    res.send(reply.replyToPostUser(req.params.userId,req.params.postId,"goodPost"));
+});
+app.post('/replytoPostCompany/:companyId&:postId',(req,res)=>{
+    res.send(reply.replyToPostCompany(req.params.companyId,req.params.postId,"nicePost"));
 });
 app.get('/getAllCompanies',(req,res)=>
 {

@@ -12,46 +12,48 @@ db.connect((err)=>{
     }
     console.log("MySql Connected...");
 })
-
-class post
+class reply
 {
-    static addPostUser(userId, content)
+    static replyToPostUser(userId,PostId,content)
     {
-        let timeStamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-        let Post = {
+        let timeStamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'); 
+        let reply = 
+        {
+            PostId: PostId,
             userId: userId,
             content: content,
             TimeStamp: timeStamp,
             Votes: 0
         }
-        let sql = `INSERT INTO Post (userID, Contents,TimeStamp,Votes)
-                   VALUES(${Post.userId},'${Post.content}','${Post.TimeStamp}',${Post.Votes})`
+        let sql = `INSERT INTO community.reply(POSTID,USERID,CONTENTS,VOTES, TIMESTAMP)
+        VALUES('${reply.PostId}','${reply.userId}','${reply.content},'${reply.Votes}','${reply.TimeStamp}')`
         db.query(sql, (err,result)=>
         {
             if(err) throw err;
             console.log(result)
         });
-        return Post;
+        return reply;
     }
-    static addPostCompany(companyId,content)
+    static replyToPostCompany(companyId,PostId,content)
     {
         let timeStamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'); 
-        let Post = {
+        let reply = 
+        {
+            PostId: PostId,
             companyId: companyId,
             content: content,
             TimeStamp: timeStamp,
             Votes: 0
         }
-        let sql = `INSERT INTO Post (CompanyID, Contents,TimeStamp,Votes)
-                   VALUES(${Post.companyId},'${Post.content}','${Post.TimeStamp}',${Post.Votes})`
+        let sql = `INSERT INTO community.reply(POSTID,COMPANYID,CONTENTS,VOTES, TIMESTAMP)
+        VALUES('${reply.PostId}','${reply.companyId}','${reply.content}','${reply.Votes}','${reply.TimeStamp}')`
         db.query(sql, (err,result)=>
         {
             if(err) throw err;
             console.log(result)
         });
-        return Post;
+        return reply;
     }
-    
-}
 
-module.exports = post;
+}
+module.exports = reply;
